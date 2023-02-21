@@ -130,17 +130,9 @@ objects:
                 user: ${VM_USER_NAME}
                 password: ${VM_PASSWORD}
                 chpasswd: { expire: False }
-                yum_repos:
-                  mongodb-org-3.6:
-                    baseurl: https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/3.6/x86_64/
-                    enabled: true
-                    gpgcheck: true
-                    gpgkey: https://www.mongodb.org/static/pgp/server-3.6.asc
-                    name: MongoDB Repository
-                packages:
-                  - bash-completion
-                  - mongodb-org
                 runcmd:
+                  - curl "https://raw.githubusercontent.com/erkerc/utils/main/repos/mongodb-org-3.6.repo" --output /etc/yum.repos.d/mongodb-org-3.6.repo
+                  - yum install -y bash-completion mongodb-org
                   - systemctl daemon-reload
                   - systemctl enable mongod.service
                   - systemctl start mongod.service
